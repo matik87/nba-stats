@@ -1,0 +1,5 @@
+Promedio por equipo en temporada
+
+GET /api/aggregates/teams/{teamId}?season=2024
+
+Respuesta (JSON) con promedios agregados de sus jugadores.

@@ -1,0 +1,16 @@
+-- V2__seed_data.sql
+
+-- test team
+INSERT INTO team(id, name)
+VALUES
+    ('00000000-0000-0000-0000-000000000001','Team A');
+
+-- test player
+INSERT INTO player(id, name, team_id)
+VALUES
+    ('22222222-2222-2222-2222-222222222222','Michael Jordan','00000000-0000-0000-0000-000000000001');
+
+-- test game
+INSERT INTO game(id, date, season)
+VALUES
+    ('11111111-1111-1111-1111-111111111111', CURRENT_DATE, EXTRACT(YEAR FROM CURRENT_DATE)::INT);

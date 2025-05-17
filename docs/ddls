@@ -1,0 +1,34 @@
+-- Equipos
+CREATE TABLE team (
+  id   UUID PRIMARY KEY,
+  name TEXT NOT NULL
+);
+
+-- Jugadores
+CREATE TABLE player (
+  id      UUID PRIMARY KEY,
+  name    TEXT NOT NULL,
+  team_id UUID REFERENCES team(id)
+);
+
+-- Partidos
+CREATE TABLE game (
+  id     UUID PRIMARY KEY,
+  date   DATE NOT NULL,
+  season INT  NOT NULL   -- p.ej. 2024
+);
+
+-- Estadísticas por jugador en un partido
+CREATE TABLE player_stat (
+  game_id        UUID    REFERENCES game(id),
+  player_id      UUID    REFERENCES player(id),
+  points         INT     NOT NULL,
+  rebounds       INT     NOT NULL,
+  assists        INT     NOT NULL,
+  steals         INT     NOT NULL,
+  blocks         INT     NOT NULL,
+  fouls          INT     NOT NULL CHECK (fouls <= 6),
+  turnovers      INT     NOT NULL,
+  minutes_played REAL    NOT NULL CHECK (minutes_played BETWEEN 0 AND 48.0),
+  PRIMARY KEY (game_id, player_id)
+);
