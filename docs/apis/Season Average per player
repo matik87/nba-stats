@@ -1,13 +1,18 @@
-Promedio por jugador en temporada
+Average per player on season
 
 GET /api/aggregates/players/{playerId}?season=2024
 
-Respuesta (JSON):
+Response (JSON):
 
 {
   "playerId": "...",
   "season": 2024,
   "avgPoints":  XX.X,
   "avgRebounds": XX.X,
-  // …
+  "avgAssists": XX.X,
+  "avgSteals": XX.X,
+  "avgBlocks": XX.X,
+  "avgFouls": XX.X,
+  "avgTurnovers": XX.X,
+  "avgMinutesPlayed": XX.X
 }
