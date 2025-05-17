@@ -1,5 +1,17 @@
-Promedio por equipo en temporada
-
+Average per team per season
 GET /api/aggregates/teams/{teamId}?season=2024
 
-Respuesta (JSON) con promedios agregados de sus jugadores.
+Response JSON example:
+
+{
+    "teamId": "00000000-0000-0000-0000-000000000001",
+    "season": 2025,
+    "avgPoints": 30.0,
+    "avgRebounds": 10.0,
+    "avgAssists": 8.0,
+    "avgSteals": 2.0,
+    "avgBlocks": 1.0,
+    "avgFouls": 2.0,
+    "avgTurnovers": 3.0,
+    "avgMinutesPlayed": 40.0
+}
