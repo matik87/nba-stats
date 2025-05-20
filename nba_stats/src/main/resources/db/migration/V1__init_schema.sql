@@ -13,9 +13,13 @@ CREATE TABLE player (
 );
 
 CREATE TABLE game (
-                      id     UUID PRIMARY KEY,
-                      date   DATE NOT NULL,
-                      season INT  NOT NULL
+                      id            UUID PRIMARY KEY,
+                      date          DATE NOT NULL,
+                      season        INT  NOT NULL,
+                      home_team_id  UUID REFERENCES team(id),
+                      away_team_id  UUID REFERENCES team(id),
+                      home_score    INT,
+                      away_score    INT
 );
 
 CREATE TABLE player_stat (

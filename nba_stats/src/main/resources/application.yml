@@ -16,19 +16,29 @@ spring:
     consumer:
       group-id: nba-stats-group
       auto-offset-reset: earliest
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
-      properties:
-        spring.json.trusted.packages: com.matias.kreiman.nbastats.dto
-      listener:
-        type: batch
-        #aligned with the number of partitions on the topic
-        concurrency: 1
-        #to PROD
-        #concurrency: 3
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+  redis:
+    host: ${SPRING_REDIS_HOST}
+    port: ${SPRING_REDIS_PORT}
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+info:
+  title: NBA Stats API
+  description: Backend for logging and aggregating NBA player statistics
+  version: 0.0.1
+
+logging:
+  level:
+    root: INFO
+    org.apache.kafka: INFO
+    org.springframework.kafka: INFO
+    org.testcontainers: INFO
 
 server:
   port: 8080

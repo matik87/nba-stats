@@ -1,4 +1,4 @@
-version: '3.8'
+#docker-compose
 services:
   db:
     image: postgres:15
@@ -32,25 +32,34 @@ services:
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
-      KAFKA_NUM_PARTITIONS: 1  # On PROD increase this
-      KAFKA_CREATE_TOPICS: player-stats:1:1   # topic:partitions:replics
-
-    #on real PROD config need to add at least 3 more kafka brokers
+      KAFKA_CREATE_TOPICS: "player-stats:3:1,player-stats.DLT:1:1" # on PROD config need to add at least 3 more kafka brokers
+  redis:
+   image: redis:7-alpine
+   ports:
+        - "6379:6379"
+   healthcheck:
+     test: ["CMD", "redis-cli", "ping"]
+     interval: 10s
+     timeout: 5s
+     retries: 5
 
   api:
-    build: .
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
     depends_on:
       - db
       - kafka
+      - redis
     ports:
       - "8080:8080"
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/nbastats
       SPRING_DATASOURCE_USERNAME: admin
       SPRING_DATASOURCE_PASSWORD: admin
-    volumes:
-      - ~/.m2:/root/.m2
-
+      SPRING_KAFKA_BOOTSTRAP-SERVERS: kafka:9092
+      SPRING_REDIS_HOST: redis
+      SPRING_REDIS_PORT: 6379
 
 volumes:
   db_data:
